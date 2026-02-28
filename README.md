@@ -99,7 +99,6 @@ Este projeto é desenvolvido por:
 - **Herbert Rezende**
 - **Victor Gabriel**
 - **Daniel**
-- **Vitor** (vitinh0z)
 
 ---
 
@@ -107,8 +106,8 @@ Este projeto é desenvolvido por:
 
 ### Pré-requisitos
 - Docker e Docker Compose instalados
-- Java 17+
-- Node.js 18+
+- Java 21+
+- React
 - Python 3.10+
 
 ### Passos

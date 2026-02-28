@@ -1,144 +1,260 @@
-# 🚀 SGPE - Sistema de Gestão para Pequenas Empresas
+# SGPE — Sistema de Gestão para Pequenas Empresas
 
-> **Ecossistema SaaS de Gestão Comercial Inteligente**  
-> Desenvolvido para pequenos e médios empresários que querem tomar decisões baseadas em dados, sem complicação.
+![Java](https://img.shields.io/badge/Java-17+-ED8B00?style=flat&logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?style=flat&logo=springboot&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white)
+![React](https://img.shields.io/badge/React-TypeScript-61DAFB?style=flat&logo=react&logoColor=black)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat&logo=docker&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat)
+![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=flat)
 
----
-
-## 📖 Sobre o Projeto
-
-O **SGPE** não é apenas mais um "radinho de balcão" que registra vendas. É uma **plataforma completa** que ajuda o lojista a gerenciar seu negócio de forma inteligente, com controle financeiro automatizado, análise de dados em tempo real e suporte multi-tenant para diferentes tipos de estabelecimentos.
-
-### 🎯 Proposta de Valor
-
-Dar ao pequeno lojista o **poder de análise de dados** que as grandes gigantes do varejo possuem, mas de forma **simples, rápida e segura**.
+Ecossistema SaaS de gestão comercial inteligente projetado para dar ao pequeno e médio lojista o mesmo poder analítico das grandes redes de varejo — com a simplicidade que o dia a dia exige.
 
 ---
 
-## 🏢 Funcionalidades Principais
+## O Problema
 
-### 1. **SaaS Multi-tenant**
-- Hospeda diferentes tipos de negócios simultaneamente:
-  - 💇 Salões de Beleza
-  - 🔧 Oficinas
-  - 🛍️ Lojas
-  - 🏋️ Academias
-- **Isolamento total de dados**: cada lojista tem seu "espaço sagrado"
-- **Escalabilidade**: acesso imediato, sem instalação
+Pequenos empresários gerenciam estoque em planilhas, fecham o caixa manualmente e só percebem que um produto acabou quando o cliente pede. Faltam dados, sobra trabalho operacional.
 
-### 2. **Operação em Tempo Real**
-- ⚡ Vendas rápidas e eficientes
-- 📦 **Estoque Inteligente**: controle automático com alertas de baixo estoque
-- 💰 **Financeiro Automatizado**: cada venda gera registro financeiro automaticamente
-
-### 3. **Inteligência Analítica** (Diferencial Competitivo)
-- 🧠 Análise de comportamento de clientes
-- 📊 Previsão de necessidades de reposição
-- 💡 Saúde financeira com projeções baseadas em histórico
-- 🔮 Insights como: *"Seu estoque de produto X vai acabar em 4 dias"*
+O SGPE resolve isso automatizando o operacional e entregando inteligência sobre o negócio em tempo real.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## O que o sistema entrega
 
-### **Backend**
-- ☕ **Java 17+** com Spring Boot
-  - Spring Data JPA
-  - Spring Security
-  - Spring Validation
-- 🐘 **PostgreSQL** (banco de dados principal)
-- 🔴 **Redis** (cache distribuído)
-- 📨 **Apache Kafka** (arquitetura de eventos)
+### Gestão multi-tenant
 
-### **Microserviço de Inteligência**
-- 🐍 **Python** (análise de dados e machine learning)
-  - Pandas / NumPy
-  - Scikit-learn (previsões)
+Uma única plataforma hospeda múltiplos tipos de estabelecimento com isolamento total de dados por `tenantId`. Não há instalação — o lojista acessa sua conta e o ambiente já está configurado para o seu segmento.
 
-### **Frontend**
-- ⚛️ **React** com TypeScript
-- 🎨 Tailwind CSS / Material-UI
+| Segmento suportado | Exemplos de uso |
+|--------------------|-----------------|
+| Salão de beleza | Agendamento, produtos de revenda, faturamento por serviço |
+| Oficina mecânica | Peças em estoque, ordens de serviço, fornecedores |
+| Loja de varejo | Catálogo de produtos, fluxo de caixa, comportamento de compra |
+| Academia | Planos, controle de inadimplência, receitas recorrentes |
 
-### **Infraestrutura**
-- 🐳 **Docker** & Docker Compose
-- ☁️ Deploy em cloud (AWS/Azure)
+### Operação sem fricção
+
+- **Vendas rápidas**: registro de venda em poucos cliques, com atualização imediata de estoque
+- **Estoque inteligente**: alertas automáticos de baixo estoque e bloqueio de venda quando o saldo zera
+- **Financeiro automatizado**: cada venda gera um lançamento financeiro automaticamente — sem fechar caixa manual no fim do dia
+
+### Inteligência analítica (diferencial Python)
+
+O microserviço de análise aprende com o histórico do negócio e gera insights acionáveis:
+
+- *"Seu estoque de óleo de motor vai acabar em 4 dias"*
+- *"Clientes que cortam cabelo com você costumam comprar este shampoo"*
+- Projeção de fluxo de caixa com base em sazonalidade histórica
 
 ---
 
-## 🏗️ Arquitetura
-
-O projeto segue uma arquitetura robusta e escalável:
-
-- **Multi-tenant**: Isolamento por `tenantId` em todas as entidades
-- **Event-Driven**: Comunicação assíncrona via Kafka para não impactar a velocidade das vendas
-- **Cache Inteligente**: Redis/Caffeine para consultas rápidas
-- **Segurança**: Criptografia de dados sensíveis + auditoria completa (quem criou, quando)
+## Arquitetura
 
 ```
 ┌─────────────────┐      ┌──────────────────┐      ┌─────────────────┐
-│   Frontend      │─────▶│  Backend (Java)  │─────▶│   PostgreSQL    │
-│   (React)       │      │  Spring Boot     │      │   (Dados)       │
+│   Frontend      │────▶ │  Backend (Java)  │────▶ │   PostgreSQL    │
+│   React + TS    │      │  Spring Boot     │      │                 │
 └─────────────────┘      └──────────────────┘      └─────────────────┘
-                                │
-                                │ Kafka Events
-                                ▼
+                                  │
+                          Eventos via Kafka
+                                  │
+                                  ▼
                          ┌──────────────────┐
                          │  Microserviço    │
                          │  Análise (Python)│
                          └──────────────────┘
 ```
 
----
+**Decisões de design:**
 
-## 👥 Equipe
-
-Este projeto é desenvolvido por:
-
-- **Ana Caroline**
-- **Luiz Clemente**
-- **Herbert Rezende**
-- **Victor Gabriel**
-- **Daniel**
+- **Event-driven**: a análise de dados ocorre de forma assíncrona via Kafka, sem impactar a latência das vendas
+- **Cache com Redis/Caffeine**: consultas frequentes (catálogo, estoque) são servidas em memória
+- **Auditoria completa**: todas as entidades registram `createdBy`, `createdAt` e `updatedAt`
+- **Criptografia de dados sensíveis**: senhas e informações críticas nunca são armazenadas em texto puro
 
 ---
 
-## 🚀 Como Executar
+## Stack tecnológica
 
-### Pré-requisitos
-- Docker e Docker Compose instalados
-- Java 21+
-- React
-- Python 3.10+
+| Camada | Tecnologia |
+|--------|-----------|
+| Backend | Java 17+, Spring Boot, Spring Data JPA, Spring Security |
+| Banco de dados | PostgreSQL 16 |
+| Cache | Redis + Caffeine |
+| Mensageria | Apache Kafka |
+| Análise / ML | Python 3.10+, Pandas, NumPy, Scikit-learn |
+| Frontend | React, TypeScript, Tailwind CSS / Material-UI |
+| Infraestrutura | Docker, Docker Compose, AWS / Azure |
 
-### Passos
+---
 
-1. Clone o repositório:
-```bash
-git clone https://github.com/vitinh0z/sgpe.git
-cd sgpe
+## Modelo de domínio
+
+```mermaid
+classDiagram
+    direction BT
+
+    class BaseEntity {
+        <<abstract>>
+        -Long id
+        -Long tenantId
+        -LocalDateTime createdAt
+        -LocalDateTime updatedAt
+        -String createdBy
+    }
+
+    class Tenant {
+        -Long id
+        -String businessName
+        -String cnpj
+        -BusinessType type
+        -Boolean active
+        -String settingsJson
+    }
+
+    class User {
+        -String username
+        -String passwordHash
+        -String email
+        -UserRole role
+        -Boolean enabled
+    }
+
+    class Person {
+        -String name
+        -String document
+        -String email
+        -String phone
+        -String address
+        -PersonType type
+        -Map~String,Object~ metadata
+    }
+
+    class Item {
+        -String name
+        -String description
+        -BigDecimal price
+        -Double stockBalance
+        -String unit
+        -ItemType type
+        -Map~String,Object~ metadata
+    }
+
+    class Sale {
+        -LocalDateTime saleDate
+        -BigDecimal totalAmount
+        -BigDecimal discount
+        -SaleStatus status
+        -PaymentMethod paymentMethod
+        -String notes
+    }
+
+    class SaleItem {
+        -Integer quantity
+        -BigDecimal unitPrice
+        -BigDecimal discount
+        -BigDecimal subtotal
+    }
+
+    class FinancialRecord {
+        -String description
+        -BigDecimal value
+        -TransactionType type
+        -LocalDate dueDate
+        -LocalDate paymentDate
+        -Boolean paid
+        -String notes
+    }
+
+    class BusinessType {
+        <<enumeration>>
+        SALAO
+        OFICINA
+        LOJA
+        ACADEMIA
+    }
+
+    class UserRole {
+        <<enumeration>>
+        ADMIN
+        MANAGER
+        OPERATOR
+    }
+
+    class SaleStatus {
+        <<enumeration>>
+        PENDING
+        COMPLETED
+        CANCELLED
+    }
+
+    class PaymentMethod {
+        <<enumeration>>
+        CASH
+        CREDIT_CARD
+        DEBIT_CARD
+        PIX
+        BANK_SLIP
+    }
+
+    class TransactionType {
+        <<enumeration>>
+        INCOME
+        EXPENSE
+    }
+
+    BaseEntity <|-- User
+    BaseEntity <|-- Person
+    BaseEntity <|-- Item
+    BaseEntity <|-- Sale
+    BaseEntity <|-- SaleItem
+    BaseEntity <|-- FinancialRecord
+
+    Tenant "1" --> "n" BaseEntity : isola por tenantId
+    Person "1" --> "n" Sale : realiza
+    Sale "1" *--> "n" SaleItem : contém
+    Item "1" --> "n" SaleItem : compõe
+    Sale "1" --> "0..1" FinancialRecord : gera
 ```
 
-2. Suba os containers:
+---
+
+## Como executar
+
+**Pré-requisitos:** Docker, Docker Compose, Java 21+ e Python 3.10+
+
 ```bash
+# Clonar o repositório
+git clone https://github.com/vitinh0z/sgpe.git
+cd sgpe
+
+# Subir toda a infraestrutura
 docker-compose up -d
 ```
 
-3. Acesse a aplicação:
-- Frontend: `http://localhost:3000`
-- Backend API: `http://localhost:8080`
+| Serviço | Endereço |
+|---------|---------|
+| Frontend | http://localhost:3000 |
+| Backend API | http://localhost:8080 |
 
 ---
 
-## 📄 Licença
+## Equipe
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+| Nome | Papel |
+|------|-------|
+| Ana Caroline | — |
+| Luiz Clemente | — |
+| Herbert Rezende | — |
+| Victor Gabriel | — |
+| Daniel | — |
+
+Dúvidas ou sugestões? Abra uma [issue](https://github.com/vitinh0z/sgpe/issues).
 
 ---
 
-## 📞 Contato
+## Licença
 
-Para dúvidas ou sugestões, abra uma [issue](https://github.com/vitinh0z/sgpe/issues) ou entre em contato com a equipe.
-
----
-
-**Feito com ❤️ por quem acredita que tecnologia pode transformar pequenos negócios.**
+Distribuído sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.

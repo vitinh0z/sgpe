@@ -1,4 +1,3 @@
 package com.sgpe.application.financial.dto;
 
-public class FinancialRecordResponse {
-}
+public record FinancialRecordResponse() {}

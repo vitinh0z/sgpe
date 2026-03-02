@@ -1,5 +1,3 @@
 package com.sgpe.application.course.dto;
 
-public class CourseResponse {
-}
-
+public record CourseResponse() {}

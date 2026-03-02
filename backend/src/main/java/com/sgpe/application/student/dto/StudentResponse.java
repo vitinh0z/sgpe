@@ -1,5 +1,3 @@
 package com.sgpe.application.student.dto;
 
-public class StudentResponse {
-}
-
+public record StudentResponse() {}

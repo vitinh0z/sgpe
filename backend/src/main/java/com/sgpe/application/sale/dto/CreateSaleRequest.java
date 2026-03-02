@@ -1,4 +1,3 @@
 package com.sgpe.application.sale.dto;
 
-public class CreateSaleRequest {
-}
+public record CreateSaleRequest() {}

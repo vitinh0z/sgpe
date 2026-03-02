@@ -1,5 +1,3 @@
 package com.sgpe.application.financial.dto;
 
-public class PaymentResponse {
-}
-
+public record PaymentResponse() {}

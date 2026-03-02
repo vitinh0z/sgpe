@@ -1,4 +1,3 @@
 package com.sgpe.application.person.dto;
 
-public class UpdatePersonRequest {
-}
+public record UpdatePersonRequest() {}

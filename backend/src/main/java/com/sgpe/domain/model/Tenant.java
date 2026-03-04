@@ -1,7 +1,6 @@
-package com.sgpe.domain.tenant.entity;
+package com.sgpe.domain.model;
 
-
-import com.sgpe.domain.constant.BusinessType;
+import com.sgpe.domain.enums.BusinessType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

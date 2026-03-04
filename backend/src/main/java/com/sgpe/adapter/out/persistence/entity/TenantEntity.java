@@ -1,6 +1,6 @@
 package com.sgpe.adapter.out.persistence.entity;
 
-import com.sgpe.domain.enums.BusinessType;
+import com.sgpe.domain.constant.BusinessType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +38,5 @@ public class TenantEntity {
 
     @Column(name = "settings_json", columnDefinition = "TEXT")
     private String settingsJson;
-
 }
 

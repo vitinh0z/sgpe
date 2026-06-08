@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGPE — Seu negócio no controle, sem complicação</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       Tokens
+    ============================================================ */
+    :root {
+      --green-950: #041f12;
+      --green-900: #0a3323;
+      --green-800: #124d36;
+      --green-700: #1b6b4a;
+      --green-600: #248860;
+      --green-500: #2ea877;
+      --green-300: #7ed4ad;
+      --green-200: #b8e8d0;
+      --green-100: #daf2e8;
+      --green-50:  #eef9f3;
+
+      --amber:      #f5a623;
+      --amber-dark: #d48c18;
+      --amber-100:  #fef3c7;
+
+      --teal:      #0d9488;
+      --teal-100:  #ccfbf1;
+
+      --pink:      #db2777;
+      --pink-100:  #fce7f3;
+
+      --bg:       #f7f9f7;
+      --surface:  #ffffff;
+      --text:     #191c19;
+      --text-mid: #4e5a4e;
+      --text-low: #8a9a8a;
+      --border:   #dce8dc;
+
+      --r:    16px;
+      --r-sm:  8px;
+      --r-lg: 24px;
+
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ============================================================
+       Reset & base
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 { font-weight: 500; line-height: 1.18; }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; }
+    ul { list-style: none; }
+
+    /* ============================================================
+       Layout
+    ============================================================ */
+    .wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    section { padding: 96px 0; }
+
+    .sect-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--green-100);
+      color: var(--green-700);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+      letter-spacing: 0.02em;
+    }
+    .sect-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--green-600);
+      border-radius: 50%;
+    }
+
+    .sect-title {
+      font-size: clamp(1.9rem, 3.8vw, 2.9rem);
+      letter-spacing: -0.025em;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+    .sect-sub {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    /* ============================================================
+       Animations
+    ============================================================ */
+    .fu {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+    }
+    .fu.on { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.16s; }
+    .d3 { transition-delay: 0.24s; }
+    .d4 { transition-delay: 0.32s; }
+    .d5 { transition-delay: 0.40s; }
+    .d6 { transition-delay: 0.48s; }
+
+    /* Hero-specific: CSS keyframe so it works without JS timing */
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-anim { animation: heroIn 0.6s var(--ease) both; }
+    .hero-anim.d1 { animation-delay: 0.06s; }
+    .hero-anim.d2 { animation-delay: 0.14s; }
+    .hero-anim.d3 { animation-delay: 0.22s; }
+    .hero-anim.d4 { animation-delay: 0.30s; }
+
+    /* ============================================================
+       Mascot placeholder
+    ============================================================ */
+    .mascot {
+      border: 2px dashed var(--green-300);
+      border-radius: var(--r-lg);
+      background: var(--green-50);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .mascot__icon { font-size: 2.4rem; line-height: 1; }
+    .mascot__desc {
+      font-size: 0.72rem;
+      color: var(--green-700);
+      font-style: italic;
+      max-width: 190px;
+      line-height: 1.55;
+    }
+
+    /* ============================================================
+       Buttons
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 500;
+      padding: 13px 26px;
+      border-radius: var(--r-sm);
+      border: none;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.18s, border-color 0.18s;
+      white-space: nowrap;
+    }
+    .btn-amber { background: var(--amber); color: #fff; }
+    .btn-amber:hover { background: var(--amber-dark); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--green-700);
+      border: 1.5px solid var(--green-200);
+    }
+    .btn-outline:hover { border-color: var(--green-600); background: var(--green-50); }
+    .btn-ghost-white {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.25);
+    }
+    .btn-ghost-white:hover { background: rgba(255,255,255,0.22); }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247,249,247,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 62px;
+    }
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--green-800);
+      letter-spacing: -0.03em;
+    }
+    .nav__logo span { color: var(--amber); }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+    .nav__links a {
+      font-size: 0.875rem;
+      color: var(--text-mid);
+      transition: color 0.2s;
+    }
+    .nav__links a:hover { color: var(--green-700); }
+    .nav__cta {
+      background: var(--amber);
+      color: #fff;
+      font-weight: 500;
+      padding: 9px 20px;
+      border-radius: var(--r-sm);
+      font-size: 0.875rem;
+      transition: background 0.18s;
+    }
+    .nav__cta:hover { background: var(--amber-dark); }
+
+    /* ============================================================
+       1. HERO
+    ============================================================ */
+    .hero {
+      padding: 72px 0 88px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* big decorative circle top-right */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -140px;
+      width: 520px;
+      height: 520px;
+      background: var(--green-100);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .hero__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 64px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero__pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-100);
+      color: var(--green-700);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 22px;
+      letter-spacing: 0.02em;
+    }
+    .hero__pill::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--green-600);
+      border-radius: 50%;
+    }
+
+    .hero__title {
+      font-size: clamp(2.2rem, 4.8vw, 3.8rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 22px;
+      color: var(--text);
+    }
+    .hero__title em {
+      font-style: normal;
+      color: var(--green-700);
+    }
+    .hero__sub {
+      font-size: 1.1rem;
+      color: var(--text-mid);
+      line-height: 1.72;
+      margin-bottom: 36px;
+      max-width: 460px;
+    }
+    .hero__actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .hero__trust {
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: var(--text-low);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+    }
+    .hero__trust span { display: flex; align-items: center; gap: 5px; }
+    .hero__trust span::before {
+      content: '✓';
+      color: var(--green-600);
+      font-size: 0.85rem;
+    }
+
+    /* visual side */
+    .hero__visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 12px;
+    }
+    .hero__mascot-wrap {
+      grid-column: 1 / 3;
+      min-height: 260px;
+    }
+    .biz-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      transition: transform 0.2s var(--ease);
+    }
+    .biz-card:hover { transform: translateY(-2px); }
+    .biz-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .biz-icon--s { background: var(--pink-100); }
+    .biz-icon--m { background: var(--amber-100); }
+    .biz-icon--r { background: var(--teal-100); }
+    .biz-icon--g { background: var(--green-100); }
+    .biz-name { font-size: 0.83rem; font-weight: 500; color: var(--text); }
+    .biz-sub  { font-size: 0.72rem; color: var(--text-low); margin-top: 1px; }
+
+    /* ============================================================
+       2. PROBLEMA
+    ============================================================ */
+    .problema { background: var(--green-50); }
+    .problema__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 52px;
+    }
+    .prob-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .prob-card::after {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 5rem;
+      color: var(--green-100);
+      font-family: Georgia, serif;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .prob-emoji { font-size: 1.8rem; margin-bottom: 14px; }
+    .prob-text { font-size: 1rem; color: var(--text); line-height: 1.65; }
+
+    /* ============================================================
+       3. COMO FUNCIONA
+    ============================================================ */
+    .como { background: var(--surface); }
+    .como__steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 60px;
+      position: relative;
+    }
+    .como__steps::before {
+      content: '';
+      position: absolute;
+      top: 30px;
+      left: calc(16.667% + 24px);
+      right: calc(16.667% + 24px);
+      height: 2px;
+      background: var(--green-200);
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+    }
+    .step__num {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: var(--green-700);
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .step__title { font-size: 1rem; font-weight: 500; margin-bottom: 8px; }
+    .step__desc  { font-size: 0.875rem; color: var(--text-mid); line-height: 1.65; }
+
+    .como__mascot {
+      max-width: 260px;
+      min-height: 160px;
+      margin: 44px auto 0;
+    }
+
+    /* ============================================================
+       4. BENEFÍCIOS
+    ============================================================ */
+    .beneficios { background: var(--green-50); }
+    .bene__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 52px;
+    }
+    .bene-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 26px;
+      transition: border-color 0.2s, transform 0.2s var(--ease);
+    }
+    .bene-card:hover { border-color: var(--green-400); transform: translateY(-2px); }
+    .bene-icon {
+      width: 46px; height: 46px;
+      background: var(--green-50);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .bene-title { font-size: 0.95rem; font-weight: 500; margin-bottom: 7px; color: var(--text); }
+    .bene-desc  { font-size: 0.84rem; color: var(--text-mid); line-height: 1.65; }
+
+    /* ============================================================
+       5. INSIGHTS
+    ============================================================ */
+    .insights {
+      background: var(--green-900);
+      color: #fff;
+    }
+    .insights .sect-tag { background: var(--green-800); color: var(--green-300); }
+    .insights .sect-tag::before { background: var(--green-500); }
+    .insights .sect-title { color: #fff; }
+    .insights .sect-sub { color: var(--green-200); }
+
+    .insights__grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      align-items: start;
+      gap: 56px;
+      margin-top: 56px;
+    }
+    .insights__mascot-wrap {
+      min-height: 280px;
+      border-color: var(--green-600);
+      background: var(--green-950);
+    }
+    .insights__mascot-wrap .mascot__desc { color: var(--green-300); }
+
+    .chat-list { display: flex; flex-direction: column; gap: 16px; }
+    .bubble {
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 4px 18px 18px 18px;
+      padding: 16px 20px;
+      position: relative;
+      max-width: 440px;
+    }
+    .bubble::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -10px;
+      border-top: 10px solid var(--surface);
+      border-left: 10px solid transparent;
+    }
+    .bubble__tag {
+      display: inline-block;
+      background: var(--amber-100);
+      color: var(--amber-dark);
+      font-size: 0.68rem;
+      font-weight: 500;
+      padding: 2px 9px;
+      border-radius: 100px;
+      margin-bottom: 8px;
+    }
+    .bubble__text { font-size: 0.92rem; line-height: 1.55; }
+    .bubble__time { font-size: 0.68rem; color: var(--text-low); margin-top: 7px; }
+
+    .insights__foot {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: var(--green-200);
+      line-height: 1.65;
+      max-width: 480px;
+    }
+
+    /* ============================================================
+       6. SEGMENTOS
+    ============================================================ */
+    .segmentos { background: var(--surface); }
+    .seg__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 52px;
+    }
+    .seg-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      background: var(--surface);
+      transition: transform 0.22s var(--ease), box-shadow 0.22s;
+    }
+    .seg-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    .seg-accent { height: 6px; }
+    .seg-accent--s { background: var(--pink); }
+    .seg-accent--m { background: var(--amber); }
+    .seg-accent--r { background: var(--teal); }
+    .seg-accent--g { background: var(--green-600); }
+    .seg-body { padding: 22px; }
+    .seg-mascot { min-height: 130px; margin-bottom: 18px; }
+    .seg-name { font-size: 0.95rem; font-weight: 500; margin-bottom: 11px; color: var(--text); }
+    .seg-list { display: flex; flex-direction: column; gap: 6px; }
+    .seg-list li {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .seg-list li::before { content: '→'; color: var(--green-600); flex-shrink: 0; }
+
+    /* ============================================================
+       7. DEPOIMENTOS
+    ============================================================ */
+    .depo { background: var(--green-50); }
+    .depo__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 52px;
+    }
+    .depo-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 30px;
+    }
+    .depo-quote { font-size: 3.5rem; color: var(--green-200); font-family: Georgia, serif; line-height: 0.7; margin-bottom: 14px; }
+    .depo-text { font-size: 0.93rem; color: var(--text); line-height: 1.72; margin-bottom: 22px; }
+    .depo-author { display: flex; align-items: center; gap: 11px; }
+    .depo-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--green-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .depo-name { font-size: 0.85rem; font-weight: 500; color: var(--text); }
+    .depo-type { font-size: 0.74rem; color: var(--text-low); margin-top: 1px; }
+
+    /* ============================================================
+       8. PLANOS
+    ============================================================ */
+    .planos { background: var(--surface); }
+    .planos__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 52px;
+      align-items: start;
+    }
+    .plan-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 30px;
+      position: relative;
+    }
+    .plan-card--pop {
+      border-color: var(--green-600);
+      border-width: 2px;
+    }
+    .plan-badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--green-700);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 4px 16px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .plan-mascot { min-height: 100px; margin-bottom: 18px; border-radius: var(--r-sm); }
+    .plan-name { font-size: 1.05rem; font-weight: 500; margin-bottom: 7px; color: var(--text); }
+    .plan-desc { font-size: 0.83rem; color: var(--text-mid); margin-bottom: 22px; line-height: 1.55; }
+    .plan-price { margin-bottom: 24px; }
+    .plan-amount { font-size: 2.4rem; font-weight: 500; color: var(--green-800); letter-spacing: -0.03em; line-height: 1; }
+    .plan-period { font-size: 0.82rem; color: var(--text-low); margin-left: 3px; }
+    .plan-features { display: flex; flex-direction: column; gap: 9px; margin-bottom: 24px; }
+    .plan-features li { font-size: 0.85rem; color: var(--text); display: flex; align-items: flex-start; gap: 8px; }
+    .plan-features li::before { content: '✓'; color: var(--green-600); font-weight: 500; flex-shrink: 0; }
+    .plan-btn { display: block; width: 100%; text-align: center; }
+
+    /* ============================================================
+       9. CTA FINAL
+    ============================================================ */
+    .cta-final {
+      background: var(--green-900);
+      padding: 96px 0;
+    }
+    .cta-final__grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 48px;
+    }
+    .cta-final__title {
+      font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .cta-final__sub { color: var(--green-200); font-size: 1rem; margin-bottom: 30px; }
+    .cta-final__mascot {
+      min-height: 220px;
+      width: 200px;
+      flex-shrink: 0;
+      border-color: var(--green-600);
+      background: var(--green-950);
+    }
+    .cta-final__mascot .mascot__desc { color: var(--green-300); }
+
+    /* ============================================================
+       10. FOOTER
+    ============================================================ */
+    .footer {
+      background: #eff1ef;
+      border-top: 1px solid var(--border);
+      padding: 38px 0;
+    }
+    .footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer__logo-group { display: flex; align-items: center; gap: 10px; }
+    .footer__mini-mascot {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      min-height: unset;
+      padding: 6px;
+    }
+    .footer__mini-mascot .mascot__desc { display: none; }
+    .footer__mini-mascot .mascot__icon { font-size: 1.4rem; }
+    .footer__brand { font-size: 1rem; font-weight: 500; color: var(--green-800); letter-spacing: -0.02em; }
+    .footer__links { display: flex; gap: 26px; flex-wrap: wrap; }
+    .footer__links a { font-size: 0.83rem; color: var(--text-mid); transition: color 0.18s; }
+    .footer__links a:hover { color: var(--green-700); }
+    .footer__copy { font-size: 0.77rem; color: var(--text-low); }
+
+    /* ============================================================
+       Responsive
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .seg__grid { grid-template-columns: repeat(2, 1fr); }
+      .planos__grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+      .insights__grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 64px 0; }
+      .nav__links { display: none; }
+      .hero__grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero__visual { grid-template-columns: 1fr 1fr; }
+      .problema__grid { grid-template-columns: 1fr; }
+      .como__steps {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .como__steps::before { display: none; }
+      .step {
+        flex-direction: row;
+        text-align: left;
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .step__num { margin-bottom: 0; flex-shrink: 0; }
+      .bene__grid { grid-template-columns: repeat(2, 1fr); }
+      .depo__grid { grid-template-columns: 1fr; }
+      .cta-final__grid { grid-template-columns: 1fr; }
+      .footer__inner { flex-direction: column; align-items: flex-start; gap: 18px; }
+    }
+
+    @media (max-width: 540px) {
+      .hero__visual { grid-template-columns: 1fr; }
+      .bene__grid { grid-template-columns: 1fr; }
+      .seg__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================
+     NAV
+================================================================ -->
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a href="#" class="nav__logo">🦎 sg<span>pe</span></a>
+    <ul class="nav__links">
+      <li><a href="#como-funciona">Como funciona</a></li>
+      <li><a href="#segmentos">Para quem é</a></li>
+      <li><a href="#planos">Planos</a></li>
+    </ul>
+    <a href="#planos" class="nav__cta">Começar grátis</a>
+  </div>
+</nav>
+
+
+<!-- ================================================================
+     1. HERO
+================================================================ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__grid">
+
+      <!-- copy -->
+      <div>
+        <div class="hero__pill hero-anim">Para salões, oficinas, lojas e academias</div>
+        <h1 class="hero__title hero-anim d1">Seu negócio no <em>controle</em>,<br>sem complicação</h1>
+        <p class="hero__sub hero-anim d2">
+          Um sistema simples pra vender, controlar seu estoque e ver o dinheiro entrar e sair — tudo num lugar só.
+        </p>
+        <div class="hero__actions hero-anim d3">
+          <a href="#planos" class="btn btn-amber">Quero experimentar grátis &nbsp;→</a>
+          <a href="#como-funciona" class="btn btn-outline">Como funciona</a>
+        </div>
+        <div class="hero__trust hero-anim d4">
+          <span>14 dias grátis</span>
+          <span>Sem cartão de crédito</span>
+          <span>Cancele quando quiser</span>
+        </div>
+      </div>
+
+      <!-- visual -->
+      <div class="hero__visual hero-anim d2">
+        <!-- mascot placeholder -->
+        <div class="mascot hero__mascot-wrap">
+          <span class="mascot__icon">🦎</span>
+          <p class="mascot__desc">Mascote: camaleão simpático, de pé, olhando para frente com expressão animada — versão padrão da marca, sem acessórios</p>
+        </div>
+
+        <!-- 4 business type cards -->
+        <div class="biz-card fu d3">
+          <div class="biz-icon biz-icon--s">
+            <!-- scissors SVG -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+              <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+              <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+              <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <div>
+            <div class="biz-name">Salão de beleza</div>
+            <div class="biz-sub">Agendamento e produtos</div>
+          </div>
+        </div>
+
+        <div class="biz-card fu d4">
+          <div class="biz-icon biz-icon--m">
+            <!-- wrench SVG -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3-3a8 8 0 01-11 11l-3 3a1 1 0 01-1.4 0l-1.6-1.6a1 1 0 010-1.4l3-3a8 8 0 0111-11z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="biz-name">Oficina mecânica</div>
+            <div class="biz-sub">Peças e ordens de serviço</div>
+          </div>
+        </div>
+
+        <div class="biz-card fu d3">
+          <div class="biz-icon biz-icon--r">
+            <!-- bag SVG -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+          </div>
+          <div>
+            <div class="biz-name">Loja de varejo</div>
+            <div class="biz-sub">Catálogo e fluxo de caixa</div>
+          </div>
+        </div>
+
+        <div class="biz-card fu d4">
+          <div class="biz-icon biz-icon--g">
+            <!-- dumbbell SVG -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1b6b4a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6.5 6.5h.01M17.5 6.5h.01M6.5 17.5h.01M17.5 17.5h.01"/>
+              <rect x="5" y="5" width="3" height="14" rx="1"/>
+              <rect x="16" y="5" width="3" height="14" rx="1"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+              <rect x="2" y="9" width="3" height="6" rx="1"/>
+              <rect x="19" y="9" width="3" height="6" rx="1"/>
+            </svg>
+          </div>
+          <div>
+            <div class="biz-name">Academia</div>
+            <div class="biz-sub">Planos e inadimplência</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     2. PROBLEMA
+================================================================ -->
+<section class="problema" id="problema">
+  <div class="wrap">
+    <span class="sect-tag fu">Você não está sozinho nisso</span>
+    <h2 class="sect-title fu d1">Parece familiar?</h2>
+    <p class="sect-sub fu d2">Antes do SGPE, era exatamente assim pra muita gente.</p>
+
+    <div class="problema__grid">
+      <div class="prob-card fu d1">
+        <div class="prob-emoji">📊</div>
+        <p class="prob-text">"Controlo o estoque numa planilha que ninguém mais entende — nem eu às vezes."</p>
+      </div>
+      <div class="prob-card fu d2">
+        <div class="prob-emoji">😬</div>
+        <p class="prob-text">"Só fico sabendo que o produto acabou quando o cliente já tá na minha frente pedindo."</p>
+      </div>
+      <div class="prob-card fu d3">
+        <div class="prob-emoji">🤷</div>
+        <p class="prob-text">"Fecho o mês sem saber direito se tive lucro ou prejuízo. Os números não batem nunca."</p>
+      </div>
+      <div class="prob-card fu d4">
+        <div class="prob-emoji">⏰</div>
+        <p class="prob-text">"Fico tão no operacional que não sobra tempo pra pensar no negócio de verdade."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     3. COMO FUNCIONA
+================================================================ -->
+<section class="como" id="como-funciona">
+  <div class="wrap">
+    <span class="sect-tag fu">Sem curva de aprendizado</span>
+    <h2 class="sect-title fu d1">Simples assim</h2>
+    <p class="sect-sub fu d2">Você não precisa de treinamento nem manual. É intuitivo do primeiro acesso.</p>
+
+    <div class="como__steps">
+      <div class="step fu d1">
+        <div class="step__num">1</div>
+        <div>
+          <h3 class="step__title">Cadastre seu negócio em minutos</h3>
+          <p class="step__desc">Tipo de estabelecimento, nome, produtos ou serviços. Rápido e sem burocracia.</p>
+        </div>
+      </div>
+      <div class="step fu d2">
+        <div class="step__num">2</div>
+        <div>
+          <h3 class="step__title">Registre suas vendas normalmente</h3>
+          <p class="step__desc">Selecione o item, informe a quantidade e confirme. O estoque atualiza sozinho.</p>
+        </div>
+      </div>
+      <div class="step fu d3">
+        <div class="step__num">3</div>
+        <div>
+          <h3 class="step__title">Veja tudo acontecer em tempo real</h3>
+          <p class="step__desc">Financeiro, estoque, clientes — num painel limpo que você entende sem ajuda.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mascot como__mascot fu d4">
+      <span class="mascot__icon">🦎</span>
+      <p class="mascot__desc">Mascote: camaleão segurando uma plaquinha escrita "fácil assim!" com expressão de quem acabou de explicar algo óbvio e está satisfeito</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     4. BENEFÍCIOS
+================================================================ -->
+<section class="beneficios" id="beneficios">
+  <div class="wrap">
+    <span class="sect-tag fu">No dia a dia</span>
+    <h2 class="sect-title fu d1">O que muda no seu dia a dia</h2>
+    <p class="sect-sub fu d2">Pequenas mudanças que fazem diferença quando se acumulam.</p>
+
+    <div class="bene__grid">
+
+      <div class="bene-card fu d1">
+        <div class="bene-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-700)" stroke-width="1.8" stroke-linecap="round">
+            <rect x="1" y="3" width="15" height="13" rx="2"/>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <h3 class="bene-title">Nunca mais ficar sem o produto que mais vende</h3>
+        <p class="bene-desc">O sistema acompanha o que sai e te avisa na hora certa de repor.</p>
+      </div>
+
+      <div class="bene-card fu d2">
+        <div class="bene-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-700)" stroke-width="1.8" stroke-linecap="round">
+            <path d="M18 8h1a4 4 0 010 8h-1"/>
+            <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+            <line x1="6" y1="1" x2="6" y2="4"/>
+            <line x1="10" y1="1" x2="10" y2="4"/>
+            <line x1="14" y1="1" x2="14" y2="4"/>
+          </svg>
+        </div>
+        <h3 class="bene-title">O aviso chega antes de você perceber o problema</h3>
+        <p class="bene-desc">Com base no seu ritmo de vendas, o sistema projeta quando o estoque vai acabar.</p>
+      </div>
+
+      <div class="bene-card fu d3">
+        <div class="bene-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-700)" stroke-width="1.8" stroke-linecap="round">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+          </svg>
+        </div>
+        <h3 class="bene-title">Cada venda já entra automaticamente no financeiro</h3>
+        <p class="bene-desc">Chega de digitar tudo duas vezes. A venda fecha, o lançamento é feito.</p>
+      </div>
+
+      <div class="bene-card fu d1">
+        <div class="bene-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-700)" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3 class="bene-title">Veja quem tá devendo e quando vence</h3>
+        <p class="bene-desc">Painel de inadimplência com vencimentos organizados por data, sem surpresa.</p>
+      </div>
+
+      <div class="bene-card fu d2">
+        <div class="bene-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-700)" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+        </div>
+        <h3 class="bene-title">Descubra quais produtos vendem mais juntos</h3>
+        <p class="bene-desc">Veja padrões de compra dos seus clientes e use isso a seu favor.</p>
+      </div>
+
+      <div class="bene-card fu d3">
+        <div class="bene-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-700)" stroke-width="1.8" stroke-linecap="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3 class="bene-title">Saiba como vai ser seu caixa no próximo mês</h3>
+        <p class="bene-desc">Projeção com base no histórico real do seu negócio, não em chute.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     5. INSIGHTS
+================================================================ -->
+<section class="insights" id="insights">
+  <div class="wrap">
+    <span class="sect-tag fu">Seu negócio observa por você</span>
+    <h2 class="sect-title fu d1">Seu negócio te fala — você só precisa ouvir</h2>
+    <p class="sect-sub fu d2">Enquanto você cuida dos clientes, o sistema fica de olho nos números.</p>
+
+    <div class="insights__grid">
+      <!-- mascot -->
+      <div class="mascot insights__mascot-wrap fu d1">
+        <span class="mascot__icon">🦎</span>
+        <p class="mascot__desc">Mascote: camaleão de óculos sentado em frente a um tablet, olhando atentamente para os dados com expressão analítica mas simpática</p>
+      </div>
+
+      <!-- chat bubbles -->
+      <div>
+        <div class="chat-list">
+          <div class="bubble fu d2">
+            <div class="bubble__tag">📦 Estoque</div>
+            <p class="bubble__text">"Seu estoque de Shampoo Reconstrutor dura mais 4 dias no ritmo atual de saídas. Hora de pedir mais?"</p>
+            <div class="bubble__time">Agora mesmo</div>
+          </div>
+          <div class="bubble fu d3">
+            <div class="bubble__tag">💡 Comportamento</div>
+            <p class="bubble__text">"Clientes que fazem escova costumam levar Óleo de Argan também. Que tal oferecer junto na próxima venda?"</p>
+            <div class="bubble__time">Hoje, 09:14</div>
+          </div>
+          <div class="bubble fu d4">
+            <div class="bubble__tag">📈 Financeiro</div>
+            <p class="bubble__text">"Esse mês tá 12% abaixo do mesmo período do ano passado. Quer ver o que mudou?"</p>
+            <div class="bubble__time">Ontem, 18:02</div>
+          </div>
+        </div>
+        <p class="insights__foot fu d5">
+          Sem relatório complicado. Sem precisar pedir pra ninguém. O sistema observa e te avisa.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     6. SEGMENTOS
+================================================================ -->
+<section class="segmentos" id="segmentos">
+  <div class="wrap">
+    <span class="sect-tag fu">Adaptado para você</span>
+    <h2 class="sect-title fu d1">Para o seu tipo de negócio</h2>
+    <p class="sect-sub fu d2">Cada estabelecimento tem suas particularidades. O sistema se adapta ao seu.</p>
+
+    <div class="seg__grid">
+
+      <!-- Salão -->
+      <div class="seg-card fu d1">
+        <div class="seg-accent seg-accent--s"></div>
+        <div class="seg-body">
+          <div class="mascot seg-mascot">
+            <span class="mascot__icon">🦎</span>
+            <p class="mascot__desc">Mascote: camaleão com avental de cabeleireiro e tesoura na mão, expressão alegre e prestativa</p>
+          </div>
+          <h3 class="seg-name">✂️ Salão de beleza</h3>
+          <ul class="seg-list">
+            <li>Agendamento de horários</li>
+            <li>Produtos de revenda no controle</li>
+            <li>Faturamento por serviço prestado</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Oficina -->
+      <div class="seg-card fu d2">
+        <div class="seg-accent seg-accent--m"></div>
+        <div class="seg-body">
+          <div class="mascot seg-mascot">
+            <span class="mascot__icon">🦎</span>
+            <p class="mascot__desc">Mascote: camaleão com capacete de mecânico e chave inglesa no ombro, postura confiante</p>
+          </div>
+          <h3 class="seg-name">🔧 Oficina mecânica</h3>
+          <ul class="seg-list">
+            <li>Controle de peças e insumos</li>
+            <li>Ordens de serviço organizadas</li>
+            <li>Gestão de fornecedores</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Loja -->
+      <div class="seg-card fu d3">
+        <div class="seg-accent seg-accent--r"></div>
+        <div class="seg-body">
+          <div class="mascot seg-mascot">
+            <span class="mascot__icon">🦎</span>
+            <p class="mascot__desc">Mascote: camaleão com crachá de funcionário e sacola de compras na mão, postura receptiva e comercial</p>
+          </div>
+          <h3 class="seg-name">🛍️ Loja de varejo</h3>
+          <ul class="seg-list">
+            <li>Catálogo de produtos completo</li>
+            <li>Fluxo de caixa detalhado</li>
+            <li>Comportamento de compra dos clientes</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Academia -->
+      <div class="seg-card fu d4">
+        <div class="seg-accent seg-accent--g"></div>
+        <div class="seg-body">
+          <div class="mascot seg-mascot">
+            <span class="mascot__icon">🦎</span>
+            <p class="mascot__desc">Mascote: camaleão com camiseta fitness e haltere na mão, animado como um personal trainer no dia de treino</p>
+          </div>
+          <h3 class="seg-name">🏋️ Academia</h3>
+          <ul class="seg-list">
+            <li>Gestão de planos e mensalidades</li>
+            <li>Controle de inadimplência</li>
+            <li>Receitas recorrentes mensais</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     7. DEPOIMENTOS
+================================================================ -->
+<section class="depo" id="depoimentos">
+  <div class="wrap">
+    <span class="sect-tag fu">Quem já usa</span>
+    <h2 class="sect-title fu d1">Quem já usa não volta pra planilha</h2>
+
+    <div class="depo__grid">
+
+      <div class="depo-card fu d1">
+        <div class="depo-quote">"</div>
+        <p class="depo-text">Antes eu fechava o mês no susto. Hoje vejo tudo em tempo real. Já no segundo mês recuperei o valor do plano com o que deixei de perder em estoque parado.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">💇</div>
+          <div>
+            <div class="depo-name">Fernanda Rocha</div>
+            <div class="depo-type">Salão Studio FR — São Paulo, SP</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="depo-card fu d2">
+        <div class="depo-quote">"</div>
+        <p class="depo-text">Minha oficina tinha peça parada há meses e eu sem saber. Agora o sistema me diz o que sai e o que fica encalhado. Mudou completamente minha decisão de compra.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">🔧</div>
+          <div>
+            <div class="depo-name">Marcelo Tavares</div>
+            <div class="depo-type">Auto Center MT — Campinas, SP</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="depo-card fu d3">
+        <div class="depo-quote">"</div>
+        <p class="depo-text">Meus alunos pagavam no cheque e eu controlava numa caderneta. Hoje tenho tudo automático, com alerta de vencimento. A inadimplência caiu pela metade em dois meses.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">🏋️</div>
+          <div>
+            <div class="depo-name">Carla Mendonça</div>
+            <div class="depo-type">FitSpace Academia — Belo Horizonte, MG</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     8. PLANOS
+================================================================ -->
+<section class="planos" id="planos">
+  <div class="wrap">
+    <span class="sect-tag fu">Transparência total</span>
+    <h2 class="sect-title fu d1">Simples, sem letra pequena</h2>
+    <p class="sect-sub fu d2">Comece grátis, pague só quando sentir que valeu. Cancele quando quiser.</p>
+
+    <div class="planos__grid">
+
+      <!-- Básico -->
+      <div class="plan-card fu d1">
+        <h3 class="plan-name">Básico</h3>
+        <p class="plan-desc">Para quem está começando e quer ter controle do dia a dia sem complicação.</p>
+        <div class="plan-price">
+          <span class="plan-amount">R$ 49</span><span class="plan-period">/mês</span>
+        </div>
+        <ul class="plan-features">
+          <li>Registro de vendas ilimitado</li>
+          <li>Controle de estoque básico</li>
+          <li>Financeiro automatizado</li>
+          <li>Até 2 usuários</li>
+          <li>Suporte por e-mail</li>
+        </ul>
+        <a href="#" class="btn btn-amber plan-btn">Começar grátis por 14 dias</a>
+      </div>
+
+      <!-- Crescimento (popular) -->
+      <div class="plan-card plan-card--pop fu d2">
+        <div class="plan-badge">⭐ Mais escolhido</div>
+        <div class="mascot plan-mascot">
+          <span class="mascot__icon">🦎</span>
+          <p class="mascot__desc">Mascote: camaleão segurando uma plaquinha escrita "mais popular!" com expressão orgulhosa e polegar pra cima</p>
+        </div>
+        <h3 class="plan-name">Crescimento</h3>
+        <p class="plan-desc">Para negócios que já têm movimento e querem enxergar os padrões antes de virar problema.</p>
+        <div class="plan-price">
+          <span class="plan-amount">R$ 99</span><span class="plan-period">/mês</span>
+        </div>
+        <ul class="plan-features">
+          <li>Tudo do plano Básico</li>
+          <li>Alertas automáticos de estoque</li>
+          <li>Painel de comportamento de compra</li>
+          <li>Projeção de fluxo de caixa</li>
+          <li>Até 5 usuários</li>
+          <li>Suporte prioritário por chat</li>
+        </ul>
+        <a href="#" class="btn btn-amber plan-btn">Começar grátis por 14 dias</a>
+      </div>
+
+      <!-- Pro -->
+      <div class="plan-card fu d3">
+        <h3 class="plan-name">Pro</h3>
+        <p class="plan-desc">Para quem quer o máximo de informação e opera com uma equipe maior.</p>
+        <div class="plan-price">
+          <span class="plan-amount">R$ 199</span><span class="plan-period">/mês</span>
+        </div>
+        <ul class="plan-features">
+          <li>Tudo do plano Crescimento</li>
+          <li>Previsão avançada de demanda</li>
+          <li>Múltiplos pontos de venda</li>
+          <li>Usuários ilimitados</li>
+          <li>Relatórios personalizados</li>
+          <li>Gerente de conta dedicado</li>
+        </ul>
+        <a href="#" class="btn btn-amber plan-btn">Começar grátis por 14 dias</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     9. CTA FINAL
+================================================================ -->
+<section class="cta-final">
+  <div class="wrap">
+    <div class="cta-final__grid">
+      <div class="fu">
+        <h2 class="cta-final__title">Comece hoje. É grátis por 14 dias.</h2>
+        <p class="cta-final__sub">Sem cartão de crédito. Sem pegadinha. Cancele quando quiser.</p>
+        <a href="#planos" class="btn btn-amber" style="font-size:1.05rem; padding: 15px 34px;">Quero experimentar grátis &nbsp;→</a>
+      </div>
+      <div class="mascot cta-final__mascot fu d2">
+        <span class="mascot__icon">🦎</span>
+        <p class="mascot__desc" style="color: var(--green-300);">Mascote: camaleão acenando com expressão animada e acolhedora, como quem está dando boas-vindas</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     10. FOOTER
+================================================================ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__inner">
+      <div class="footer__logo-group">
+        <div class="mascot footer__mini-mascot">
+          <span class="mascot__icon">🦎</span>
+        </div>
+        <span class="footer__brand">sgpe</span>
+      </div>
+      <ul class="footer__links">
+        <li><a href="#">Sobre</a></li>
+        <li><a href="#">Contato</a></li>
+        <li><a href="#">Termos de uso</a></li>
+        <li><a href="#">Privacidade</a></li>
+      </ul>
+      <span class="footer__copy">© 2025 SGPE. Todos os direitos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // Scroll-triggered fade-up
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('on');
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
+  );
+
+  document.querySelectorAll('.fu').forEach((el) => observer.observe(el));
+</script>
+
+</body>
+</html>
